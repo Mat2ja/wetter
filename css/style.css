@@ -1,0 +1,100 @@
+* {
+  margin: 0;
+  padding: 0; }
+
+*,
+*::before,
+*::after {
+  box-sizing: inherit; }
+
+html {
+  box-sizing: border-box;
+  font-size: 62.5%;
+  font-family: 'Montserrat', Helvetica, sans-serif; }
+
+body {
+  font-size: 1.6rem;
+  background: url(../img/bg.jpg) no-repeat;
+  background-size: cover;
+  background-position: top center; }
+
+.app-wrap {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+  background-image: linear-gradient(to bottom, rgba(0, 0, 0, 0.2), rgba(0, 0, 0, 0.5)); }
+
+.header {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 5rem 1.5rem 1.5rem; }
+  .header__search-box {
+    font: inherit;
+    width: 100%;
+    max-width: 28rem;
+    padding: 0.6em 0.95em;
+    display: flex;
+    align-items: center;
+    border: none;
+    outline: none;
+    background: rgba(255, 255, 255, 0.25);
+    backdrop-filter: blur(2px);
+    border-radius: 1.6rem 0 1.6rem 0;
+    color: #313131;
+    border-bottom: 0.3rem solid #831b29;
+    transform: scale(1, 1);
+    transition: all 300ms ease-out; }
+    .header__search-box:focus {
+      background: rgba(255, 255, 255, 0.6); }
+
+main {
+  margin-top: 5rem;
+  flex: 1 1 100%;
+  padding: 2.5rem;
+  padding-bottom: 5rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center; }
+
+.location {
+  color: white; }
+  .location__city {
+    font-size: 3.2rem;
+    margin-bottom: 0.8rem;
+    font-weight: 500; }
+  .location__date {
+    font-size: 1.6rem; }
+
+.current {
+  color: white; }
+  .current__temp {
+    font-size: 10.2rem;
+    font-weight: 900;
+    margin: 3.6rem 0 1rem;
+    text-shadow: 0.2rem 1rem rgba(0, 0, 0, 0.8);
+    display: flex;
+    align-items: flex-start;
+    line-height: 1; }
+    .current__temp span {
+      font-weight: 600;
+      margin-left: 0.8rem; }
+      .current__temp span.unit {
+        font-size: 0.7em; }
+  .current__feels-like {
+    margin-bottom: 3.6rem;
+    font-style: italic; }
+  .current__weather {
+    font-size: 3.8rem;
+    font-weight: 700;
+    font-style: italic;
+    margin-bottom: 1.5rem;
+    text-shadow: 0.1rem 0.4rem rgba(0, 0, 0, 0.5);
+    display: flex;
+    align-items: center;
+    justify-content: center; }
+  .current__hi-low {
+    font-size: 2.4rem;
+    font-weight: 500;
+    text-shadow: 0.1rem 0.4rem rgba(0, 0, 0, 0.5); }
