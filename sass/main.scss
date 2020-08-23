@@ -27,6 +27,10 @@ body {
 	background-position: top center;
 }
 
+::selection {
+	background: hsla(10, 81%, 68%, 0.8);
+}
+
 .app-wrap {
 	display: flex;
 	flex-direction: column;
@@ -58,13 +62,13 @@ body {
 
 		border: none;
 		outline: none;
-		background: rgba(255, 255, 255, 0.25);
+		background: rgba(255, 255, 255, 0.3);
 		backdrop-filter: blur(4px);
 		border-radius: 1.6rem 0 1.6rem 0;
 		color: #313131;
 
 		// border-bottom: 0.3rem solid hsl(144, 40%, 35%);
-		border-bottom: 0.3rem solid #a83e2a;
+		border-bottom: 0.3rem solid #c24f38;
 		transform: scale(1, 1);
 		transition: background 300ms ease-out, border-radius 150ms ease-out;
 
@@ -82,7 +86,7 @@ body {
 	max-width: 34rem;
 	width: 100%;
 
-	background: rgba(255, 255, 255, 0.25);
+	background: rgba(255, 255, 255, 0.3);
 	backdrop-filter: blur(4px);
 	border-bottom-right-radius: 1.6rem;
 
@@ -117,14 +121,14 @@ body {
 		}
 
 		&.hl {
-			background: #ffc600;
+			background: hsla(10, 81%, 68%, 0.8);
 		}
 	}
 
 	.flag-icon {
 		font-size: 2rem;
 		margin-left: 0.8rem;
-		filter: saturate(95%) drop-shadow(0 0.2rem 1rem rgba(0, 0, 0, 0.4));
+		filter: saturate(95%) drop-shadow(0 0.2rem .5rem rgba(0, 0, 0, 0.2));
 		border-radius: 50%;
 	}
 }

@@ -22,6 +22,9 @@ body {
   background-size: cover;
   background-position: top center; }
 
+::selection {
+  background: rgba(239, 129, 107, 0.8); }
+
 .app-wrap {
   display: flex;
   flex-direction: column;
@@ -44,11 +47,11 @@ body {
     align-items: center;
     border: none;
     outline: none;
-    background: rgba(255, 255, 255, 0.25);
+    background: rgba(255, 255, 255, 0.3);
     backdrop-filter: blur(4px);
     border-radius: 1.6rem 0 1.6rem 0;
     color: #313131;
-    border-bottom: 0.3rem solid #a83e2a;
+    border-bottom: 0.3rem solid #c24f38;
     transform: scale(1, 1);
     transition: background 300ms ease-out, border-radius 150ms ease-out; }
     .header__search-box:focus {
@@ -61,7 +64,7 @@ body {
   top: 100%;
   max-width: 34rem;
   width: 100%;
-  background: rgba(255, 255, 255, 0.25);
+  background: rgba(255, 255, 255, 0.3);
   backdrop-filter: blur(4px);
   border-bottom-right-radius: 1.6rem; }
   .suggestions__item {
@@ -84,11 +87,11 @@ body {
       align-items: center;
       font-weight: 500; }
     .suggestions span.hl {
-      background: #ffc600; }
+      background: rgba(239, 129, 107, 0.8); }
   .suggestions .flag-icon {
     font-size: 2rem;
     margin-left: 0.8rem;
-    filter: saturate(95%) drop-shadow(0 0.2rem 1rem rgba(0, 0, 0, 0.4));
+    filter: saturate(95%) drop-shadow(0 0.2rem 0.5rem rgba(0, 0, 0, 0.2));
     border-radius: 50%; }
 
 main {
