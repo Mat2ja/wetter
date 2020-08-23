@@ -13,13 +13,14 @@ const weatherDescEl = document.querySelector('.current__weather');
 const highLow = document.querySelector('.current__hi-low');
 const suggestions = document.querySelector('.suggestions');
 
-const cities = [];
+// const mapsURL = `https://www.google.com/maps/place/Bestovje/@${lat},${lon}`;
+
+// const cities = [];
+let cities;
 const cityList = fetch('./city.list.json')
     .then(blob => blob.json())
     .then(data => {
-        for (let city of data) {
-            cities.push({ id: city.id, name: city.name, country: city.country });
-        }
+        cities = data;
     });
 
 function setQuery(e) {
@@ -43,8 +44,6 @@ function setQuery(e) {
             getResults(searchbox.value);
         }
 
-
-
     }
 }
 
@@ -60,7 +59,10 @@ function getResults(query) {
 
 function displayResults(weather) {
     clearSuggestions();
-    city.innerHTML = `${weather.name}, ${weather.sys.country}`;
+    city.innerHTML = `
+        ${weather.name}, ${weather.sys.country}
+        <ion-icon name="location" class='icon'></ion-icon> 
+    `;
     // date.innerText = moment().format('dddd MMMM Do YYYY, HH:mm');
     date.innerText = moment().format('dddd D MMMM');
 
@@ -78,9 +80,14 @@ function displayResults(weather) {
     weatherDescEl.innerText = weatherDesc;
     highLow.innerHTML = `
         ${tempLow}<span class="unit">&degC</span>
-        <i class='bx bxs-thermometer'></i>
+        <ion-icon name="thermometer" class='icon'></ion-icon>
         ${tempHigh}<span class="unit">&degC</span>
     `;
+    // highLow.innerHTML = `
+    //     ${tempLow}<span class="unit">&degC</span>
+    //     <i class='bx bxs-thermometer'></i>
+    //     ${tempHigh}<span class="unit">&degC</span>
+    // `;
 
     searchbox.value = '';
     searchbox.blur();
