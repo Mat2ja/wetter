@@ -9,14 +9,15 @@
 	box-sizing: inherit;
 }
 
+*:focus {
+	outline: none;
+	border: none;
+	box-shadow: none;
+}
+
 a {
 	text-decoration: none;
 	color: inherit;
-
-	&:focus {
-		outline: none;
-		border: none;
-	}
 }
 
 html {
@@ -54,11 +55,43 @@ body {
 	flex-direction: column;
 	padding: 5rem 1.5rem 0;
 	position: relative;
-	
+
+	.input-box {
+		max-width: 34rem;
+		width: 100%;
+		position: relative;
+		justify-content: center;
+	}
+
+	#geolocate {
+		background: none;
+		border: none;
+		position: absolute;
+		top: 50%;
+		right: 1rem;
+		transform: translateY(-50%);
+		// border: 1px solid black;
+		padding: 0.4rem;
+		border-radius: 0.5rem;
+
+		cursor: pointer;
+		transition: all 300ms ease;
+
+		ion-icon {
+			font-size: 2rem;
+			color: #c24f38;
+			display: block;
+		}
+
+		&:hover {
+			background: hsla(10, 55%, 49%, 0.2);
+		}
+	}
+
 	&__search-box {
 		font: inherit;
 		width: 100%;
-		max-width: 34rem;
+		// max-width: 34rem;
 		padding: 0.6em 0.95em;
 		display: flex;
 		align-items: center;
