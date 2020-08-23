@@ -25,16 +25,24 @@ const cityList = fetch('./city.list.json')
 function setQuery(e) {
     // Enter
     if (e.keyCode === 13) {
-        let suggestionsItems = document.querySelectorAll('.suggestions__item');
-        for (let suggestion of suggestionsItems) {
-            if (suggestion.classList.contains('active')) {
-                let city = suggestion.querySelector('.city').innerText;
-                getResults(suggestion);
-                return;
+        // if there are suggestions
+        if (suggestions.hasChildNodes()) {
+            let suggestionsItems = document.querySelectorAll('.suggestions__item');
+
+            for (let suggestion of suggestionsItems) {
+                if (suggestion.classList.contains('active')) {
+                    let city = suggestion.querySelector('.city').innerText;
+                    getResults(city);
+                    return;
+                }
             }
+            // if none of the suggestions has 'active' class, pick first
+            let city = suggestionsItems[0].querySelector('.city').innerText;
+            getResults(city);
+        } else {
+            getResults(searchbox.value);
         }
-        let city = suggestionsItems[0].querySelector('.city').innerText;
-        getResults(city);
+
 
 
     }
@@ -146,6 +154,13 @@ document.addEventListener('keyup', ({ keyCode }) => {
     if (keyCode === 9) {
         searchbox.focus();
     } else if (keyCode === 40) {
+        // DOWN
+        if (suggestions.hasChildNodes()) {
+            console.log('arrow down');
+            // moveThroughSuggestions(counter++);
+        }
+    } else if (keyCode === 38) {
+        // UP
         if (suggestions.hasChildNodes()) {
             console.log('arrow down');
             // moveThroughSuggestions(counter++);
@@ -153,7 +168,7 @@ document.addEventListener('keyup', ({ keyCode }) => {
     }
 });
 
-function moveThroughSuggestions(counter) {
+function moveThroughSuggestions(counter, direction) {
     // TODO
     let suggestionsItems = document.querySelectorAll('.suggestions__item');
     console.log('COUNTER', counter);

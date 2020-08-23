@@ -49,6 +49,7 @@ body {
 		padding: 0.6em 0.95em;
 		display: flex;
 		align-items: center;
+		text-transform: lowercase;
 
 		border: none;
 		outline: none;
@@ -89,7 +90,8 @@ body {
 		transition: background 0.2s;
 		cursor: pointer;
 
-		&:hover, &.active {
+		&:hover,
+		&.active {
 			background: rgba(255, 255, 255, 0.25);
 		}
 	}
