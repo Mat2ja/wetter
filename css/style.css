@@ -78,9 +78,15 @@ body {
     .suggestions span.city {
       text-transform: capitalize; }
     .suggestions span.country {
-      font-size: 1.4rem; }
+      font-size: 1.4rem;
+      display: flex;
+      align-items: center;
+      font-weight: 500; }
     .suggestions span.hl {
       background: #ffc600; }
+  .suggestions .flag-icon {
+    font-size: 2rem;
+    margin-left: .8rem; }
 
 main {
   margin-top: 5rem;
@@ -101,7 +107,7 @@ main {
     display: flex;
     align-items: center; }
     .location__city .icon {
-      font-size: .8em;
+      font-size: 0.8em;
       margin-left: 1.2rem;
       margin-right: -2.4rem; }
   .location__date {
@@ -145,7 +151,7 @@ main {
       position: relative;
       top: 1px;
       font-size: 1.2em;
-      margin: 0 .8rem; }
+      margin: 0 0.8rem; }
 
 .hide {
   opacity: 0; }

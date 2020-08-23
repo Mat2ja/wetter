@@ -71,7 +71,6 @@ body {
 		&:focus {
 			background: rgba(255, 255, 255, 0.6);
 		}
-
 	}
 }
 
@@ -111,11 +110,19 @@ body {
 
 		&.country {
 			font-size: 1.4rem;
+			display: flex;
+			align-items: center;
+			font-weight: 500;
 		}
 
 		&.hl {
 			background: #ffc600;
 		}
+	}
+
+	.flag-icon {
+		font-size: 2rem;
+		margin-left: .8rem;
 	}
 }
 
@@ -140,7 +147,7 @@ main {
 		align-items: center;
 
 		.icon {
-			font-size: .8em;
+			font-size: 0.8em;
 			margin-left: 1.2rem;
 			margin-right: -2.4rem;
 		}
@@ -201,7 +208,7 @@ main {
 			position: relative;
 			top: 1px;
 			font-size: 1.2em;
-			margin: 0 .8rem;
+			margin: 0 0.8rem;
 		}
 	}
 }

@@ -132,7 +132,7 @@ function displayMatches() {
             return `
         <li class='suggestions__item' data-id='${place.id}'>
             <span class="city">${cityName}</span>
-            <span class="country">${countryName}</span>
+            <span class="country">${countryName} <span class="flag-icon flag-icon-${countryName.toLowerCase()} flag-icon-squared"></span> </span>
         </li>
         `;
         }).join('');
