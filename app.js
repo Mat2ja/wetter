@@ -29,14 +29,17 @@ function setQuery(e) {
 
             for (let suggestion of suggestionsItems) {
                 if (suggestion.classList.contains('active')) {
-                    let city = suggestion.querySelector('.city').innerText;
-                    getResults(city);
+                    let cityObj = cities.find(o => o.id == suggestion.dataset.id);
+                    // console.log('cityObj', cityObj);
+                    getResults(cityObj);
                     return;
                 }
             }
-            // if none of the suggestions has 'active' class, pick first
-            let city = suggestionsItems[0].querySelector('.city').innerText;
-            getResults(city);
+
+            // if none of the suggestions has 'active' class, send a search query
+            // try to find it in the cities, if not found, send only the seachbox value as the query
+            let cityObj = cities.find(o => o.name.toLowerCase() == searchbox.value.toLowerCase()) || searchbox.value;
+            getResults(cityObj);
         } else {
             getResults(searchbox.value);
         }
@@ -45,20 +48,36 @@ function setQuery(e) {
 }
 function getResults(query) {
     console.log(query);
-    let url = `${api.baseUrl}weather?id=${query.id}&unit=metric&appid=${api.key}`;
+    let url;
+    if (query.id) {
+        url = `${api.baseUrl}weather?id=${query.id}&unit=metric&appid=${api.key}`;
+    } 
+    else {
+        url = `${api.baseUrl}weather?q=${query}&unit=metric&appid=${api.key}`;
+    }
+
     fetch(url)
         .then(weather => weather.json())
         .then(res => displayResults(res, query))
         .catch(err => console.log(err))
 }
 
-function displayResults(weather, { coord }) {
+function displayResults(weather, query) {
+    const { coord } = query;
     clearSuggestions();
+
     city.innerHTML = `
         ${weather.name}, ${weather.sys.country}
         <ion-icon name="location" class='icon'></ion-icon> 
     `;
-    city.href = `https://www.google.com/maps?ll=${coord.lat},${coord.lon}&t=k`;
+    city.dataset.id = query.id;
+
+    if (coord) {
+        city.href = `https://www.google.com/maps?ll=${coord.lat},${coord.lon}&t=k`;
+    } else {
+        city.href = `https://www.google.com/maps?q=${query}&t=k`;
+    }
+
     date.innerText = moment().format('dddd D MMMM');
 
     let temp = Math.round(calculateCelsius(weather.main.temp));
@@ -109,7 +128,7 @@ function displayMatches() {
 
             suggestions.classList.remove('hide');
             return `
-        <li class='suggestions__item'>
+        <li class='suggestions__item' data-id='${place.id}'>
             <span class="city">${cityName}</span>
             <span class="country">${countryName}</span>
         </li>
@@ -122,8 +141,9 @@ function displayMatches() {
 
     for (let item of suggestionsItems) {
         item.addEventListener('click', (e) => {
-            let cityName = item.querySelector('.city').innerText;
-            let cityObj = cities.find(o => o.name === cityName);
+            // console.log('Clicked item: ', item);
+            let cityObj = cities.find(o => o.id == item.dataset.id);
+            // console.log('cityObj', cityObj);
             getResults(cityObj);
         });
     }
