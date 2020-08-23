@@ -13,9 +13,6 @@ const weatherDescEl = document.querySelector('.current__weather');
 const highLow = document.querySelector('.current__hi-low');
 const suggestions = document.querySelector('.suggestions');
 
-// const mapsURL = `https://www.google.com/maps/place/Bestovje/@${lat},${lon}`;
-
-// const cities = [];
 let cities;
 const cityList = fetch('./city.list.json')
     .then(blob => blob.json())
@@ -56,14 +53,27 @@ function getResults(query) {
 
         })
 }
+function getResults2(query) {
+    console.log(query);
+    fetch(`${api.baseUrl}weather?id=${query.id}&unit=metric&appid=${api.key}`)
+        .then(weather => weather.json())
+        // .then(displayResults)
+        .then(res => {
+            displayResults(res, query);
+        })
+        .catch(err => {
+            console.log(err);
 
-function displayResults(weather) {
+        })
+}
+
+function displayResults(weather, {coord}) {
     clearSuggestions();
     city.innerHTML = `
         ${weather.name}, ${weather.sys.country}
         <ion-icon name="location" class='icon'></ion-icon> 
     `;
-    // date.innerText = moment().format('dddd MMMM Do YYYY, HH:mm');
+    city.href = `https://www.google.com/maps?ll=${coord.lat},${coord.lon}&t=k`;
     date.innerText = moment().format('dddd D MMMM');
 
     let temp = Math.round(calculateCelsius(weather.main.temp));
@@ -133,7 +143,10 @@ function displayMatches() {
     for (let item of suggestionsItems) {
         item.addEventListener('click', (e) => {
             let cityName = item.querySelector('.city').innerText;
-            getResults(cityName);
+            console.log(item.querySelector('.city'));
+            let cityObj = cities.find(o => o.name === cityName);
+            // getResults(cityName);
+            getResults2(cityObj);
         });
     }
 }
@@ -151,6 +164,24 @@ function clearWeatherData() {
     feel.innerText = '';
     weatherDescEl.innerText = '';
     highLow.innerText = '';
+}
+
+function moveThroughSuggestions(counter, direction) {
+    // TODO
+    let suggestionsItems = document.querySelectorAll('.suggestions__item');
+    console.log('COUNTER', counter);
+
+    if (counter === suggestionsItems.length) {
+        suggestionsItems[counter - 1].classList.remove('active');
+        counter = 0;
+    }
+    if (counter === 0) {
+        suggestionsItems[counter].classList.add('active');
+        return;
+    }
+
+    suggestionsItems[counter - 1].classList.remove('active');
+    suggestionsItems[counter++].classList.add('active');
 }
 
 searchbox.addEventListener('input', displayMatches);
@@ -175,20 +206,4 @@ document.addEventListener('keyup', ({ keyCode }) => {
     }
 });
 
-function moveThroughSuggestions(counter, direction) {
-    // TODO
-    let suggestionsItems = document.querySelectorAll('.suggestions__item');
-    console.log('COUNTER', counter);
 
-    if (counter === suggestionsItems.length) {
-        suggestionsItems[counter - 1].classList.remove('active');
-        counter = 0;
-    }
-    if (counter === 0) {
-        suggestionsItems[counter].classList.add('active');
-        return;
-    }
-
-    suggestionsItems[counter - 1].classList.remove('active');
-    suggestionsItems[counter++].classList.add('active');
-}
