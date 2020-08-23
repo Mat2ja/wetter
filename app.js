@@ -53,7 +53,7 @@ function getResults(query) {
     let url;
     if (query.id) {
         url = `${api.baseUrl}weather?id=${query.id}&unit=metric&appid=${api.key}`;
-    } 
+    }
     else {
         url = `${api.baseUrl}weather?q=${query}&unit=metric&appid=${api.key}`;
     }
@@ -129,12 +129,13 @@ function displayMatches() {
             const countryName = place.country.replace(regex, `<span class="hl">${this.value}</span>`);
 
             suggestions.classList.remove('hide');
+            searchbox.style.borderBottomRightRadius = '0';
             return `
-        <li class='suggestions__item' data-id='${place.id}'>
-            <span class="city">${cityName}</span>
-            <span class="country">${countryName} <span class="flag-icon flag-icon-${countryName.toLowerCase()} flag-icon-squared"></span> </span>
-        </li>
-        `;
+                <li class='suggestions__item' data-id='${place.id}'>
+                    <span class="city">${cityName}</span>
+                    <span class="country">${countryName} <span class="flag-icon flag-icon-${countryName.toLowerCase()} flag-icon-squared"></span> </span>
+                </li>
+            `;
         }).join('');
 
     suggestions.innerHTML = html;
@@ -149,6 +150,7 @@ function displayMatches() {
 }
 
 function clearSuggestions() {
+    searchbox.style.borderBottomRightRadius = '1.6rem';
     suggestions.innerHTML = '';
     counter = 0;
 }
