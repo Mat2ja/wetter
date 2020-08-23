@@ -2,7 +2,7 @@ const api = {
     key: '477af09cc9bebef17b4faba6ec41179b',
     baseUrl: 'https://api.openweathermap.org/data/2.5/'
 };
-
+console.clear();
 const searchbox = document.querySelector('.header__search-box');
 const main = document.querySelector('main');
 const city = document.querySelector('.location__city');
@@ -27,17 +27,14 @@ function setQuery(e) {
         if (suggestions.hasChildNodes()) {
             let suggestionsItems = document.querySelectorAll('.suggestions__item');
 
-            for (let suggestion of suggestionsItems) {
-                if (suggestion.classList.contains('active')) {
-                    let cityObj = cities.find(o => o.id == suggestion.dataset.id);
-                    // console.log('cityObj', cityObj);
-                    getResults(cityObj);
-                    return;
+            for (let item of suggestionsItems) {
+                if (item.classList.contains('active')) {
+                    getResults(findCityObject(item));
                 }
             }
 
             // if none of the suggestions has 'active' class, send a search query
-            // try to find it in the cities, if not found, send only the seachbox value as the query
+            // try to find it in the cities file, if not found, send only the searchbox value as the query
             let cityObj = cities.find(o => o.name.toLowerCase() == searchbox.value.toLowerCase()) || searchbox.value;
             getResults(cityObj);
         } else {
@@ -46,6 +43,11 @@ function setQuery(e) {
 
     }
 }
+
+function findCityObject(suggestion) {
+    return cities.find(o => o.id == suggestion.dataset.id);
+}
+
 function getResults(query) {
     console.log(query);
     let url;
@@ -73,7 +75,7 @@ function displayResults(weather, query) {
     city.dataset.id = query.id;
 
     if (coord) {
-        city.href = `https://www.google.com/maps?ll=${coord.lat},${coord.lon}&t=k`;
+        city.href = `https://www.google.com/maps?q=${query.name}&ll=${coord.lat},${coord.lon}&t=k`;
     } else {
         city.href = `https://www.google.com/maps?q=${query}&t=k`;
     }
@@ -141,10 +143,7 @@ function displayMatches() {
 
     for (let item of suggestionsItems) {
         item.addEventListener('click', (e) => {
-            // console.log('Clicked item: ', item);
-            let cityObj = cities.find(o => o.id == item.dataset.id);
-            // console.log('cityObj', cityObj);
-            getResults(cityObj);
+            getResults(findCityObject(item));
         });
     }
 }
