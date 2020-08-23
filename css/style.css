@@ -10,6 +10,9 @@
 a {
   text-decoration: none;
   color: inherit; }
+  a:focus {
+    outline: none;
+    border: none; }
 
 html {
   box-sizing: border-box;
@@ -28,7 +31,7 @@ body {
 .app-wrap {
   display: flex;
   flex-direction: column;
-  min-height: 100vh;
+  height: 100vh;
   background-image: linear-gradient(to bottom, rgba(0, 0, 0, 0.2), rgba(0, 0, 0, 0.5)); }
 
 .header {

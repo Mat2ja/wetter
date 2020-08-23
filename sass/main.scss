@@ -12,6 +12,11 @@
 a {
 	text-decoration: none;
 	color: inherit;
+
+	&:focus {
+		outline: none;
+		border: none;
+	}
 }
 
 html {
@@ -34,7 +39,7 @@ body {
 .app-wrap {
 	display: flex;
 	flex-direction: column;
-	min-height: 100vh;
+	height: 100vh;
 	background-image: linear-gradient(
 		to bottom,
 		rgba(0, 0, 0, 0.2),
@@ -48,9 +53,8 @@ body {
 	align-items: center;
 	flex-direction: column;
 	padding: 5rem 1.5rem 0;
-
 	position: relative;
-
+	
 	&__search-box {
 		font: inherit;
 		width: 100%;
@@ -90,6 +94,7 @@ body {
 	backdrop-filter: blur(4px);
 	border-bottom-right-radius: 1.6rem;
 
+	//todo overflow
 	&__item {
 		display: flex;
 		justify-content: space-between;
@@ -128,7 +133,7 @@ body {
 	.flag-icon {
 		font-size: 2rem;
 		margin-left: 0.8rem;
-		filter: saturate(95%) drop-shadow(0 0.2rem .5rem rgba(0, 0, 0, 0.2));
+		filter: saturate(95%) drop-shadow(0 0.2rem 0.5rem rgba(0, 0, 0, 0.2));
 		border-radius: 50%;
 	}
 }

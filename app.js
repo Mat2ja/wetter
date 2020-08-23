@@ -38,7 +38,13 @@ function setQuery(e) {
             let cityObj = cities.find(o => o.name.toLowerCase() == searchbox.value.toLowerCase()) || searchbox.value;
             getResults(cityObj);
         } else {
-            getResults(searchbox.value);
+            console.log(searchbox.value);
+            // TODO dont send request for empty strings
+            if (searchbox.value === '') {
+                throw new Error('No city provided');
+            } else {
+                getResults(searchbox.value);
+            }
         }
 
     }
@@ -122,18 +128,18 @@ function displayMatches() {
     const matchArray = findMatches(this.value, cities);
 
     const html = matchArray
-        .slice(0, 12)
+        .slice(0, 14)
         .map(place => {
             const regex = new RegExp(this.value, 'gi');
             const cityName = place.name.replace(regex, `<span class="hl">${this.value}</span>`);
-            const countryName = place.country.replace(regex, `<span class="hl">${this.value}</span>`);
+            // const countryName = place.country.replace(regex, `<span class="hl">${this.value}</span>`);
 
             suggestions.classList.remove('hide');
             searchbox.style.borderBottomRightRadius = '0';
             return `
                 <li class='suggestions__item' data-id='${place.id}'>
                     <span class="city">${cityName}</span>
-                    <span class="country">${countryName} <span class="flag-icon flag-icon-${countryName.toLowerCase()} flag-icon-squared"></span> </span>
+                    <span class="country">${place.country}<span class="flag-icon flag-icon-${place.country.toLowerCase()} flag-icon-squared"></span></span>
                 </li>
             `;
         }).join('');
