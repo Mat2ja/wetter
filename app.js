@@ -43,31 +43,16 @@ function setQuery(e) {
 
     }
 }
-
 function getResults(query) {
-    fetch(`${api.baseUrl}weather?q=${query}&unit=metric&appid=${api.key}`)
-        .then(weather => weather.json())
-        .then(displayResults)
-        .catch(err => {
-            console.log(err);
-
-        })
-}
-function getResults2(query) {
     console.log(query);
-    fetch(`${api.baseUrl}weather?id=${query.id}&unit=metric&appid=${api.key}`)
+    let url = `${api.baseUrl}weather?id=${query.id}&unit=metric&appid=${api.key}`;
+    fetch(url)
         .then(weather => weather.json())
-        // .then(displayResults)
-        .then(res => {
-            displayResults(res, query);
-        })
-        .catch(err => {
-            console.log(err);
-
-        })
+        .then(res => displayResults(res, query))
+        .catch(err => console.log(err))
 }
 
-function displayResults(weather, {coord}) {
+function displayResults(weather, { coord }) {
     clearSuggestions();
     city.innerHTML = `
         ${weather.name}, ${weather.sys.country}
@@ -93,11 +78,6 @@ function displayResults(weather, {coord}) {
         <ion-icon name="thermometer" class='icon'></ion-icon>
         ${tempHigh}<span class="unit">&degC</span>
     `;
-    // highLow.innerHTML = `
-    //     ${tempLow}<span class="unit">&degC</span>
-    //     <i class='bx bxs-thermometer'></i>
-    //     ${tempHigh}<span class="unit">&degC</span>
-    // `;
 
     searchbox.value = '';
     searchbox.blur();
@@ -143,10 +123,8 @@ function displayMatches() {
     for (let item of suggestionsItems) {
         item.addEventListener('click', (e) => {
             let cityName = item.querySelector('.city').innerText;
-            console.log(item.querySelector('.city'));
             let cityObj = cities.find(o => o.name === cityName);
-            // getResults(cityName);
-            getResults2(cityObj);
+            getResults(cityObj);
         });
     }
 }
@@ -154,7 +132,6 @@ function displayMatches() {
 function clearSuggestions() {
     suggestions.innerHTML = '';
     counter = 0;
-
 }
 
 function clearWeatherData() {
