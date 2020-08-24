@@ -12,6 +12,7 @@ const feel = document.querySelector('.current__feels-like');
 const weatherDescEl = document.querySelector('.current__weather');
 const highLow = document.querySelector('.current__hi-low');
 const suggestions = document.querySelector('.suggestions');
+const geoBtn = document.querySelector('#geolocate');
 
 let cities;
 const cityList = fetch('./city.list.json')
@@ -54,15 +55,17 @@ function findCityObject(suggestion) {
     return cities.find(o => o.id == suggestion.dataset.id);
 }
 
-function getResults(query) {
+function getResults(query, coords) {
     console.log(query);
     let url;
     if (query.id) {
         url = `${api.baseUrl}weather?id=${query.id}&unit=metric&appid=${api.key}`;
-    }
-    else {
+    } else if (coords) {
+        url = `${api.baseUrl}weather?lat=${coords.lat}&lon=${coords.lon}&appid=${api.key}`
+    } else {
         url = `${api.baseUrl}weather?q=${query}&unit=metric&appid=${api.key}`;
     }
+
 
     fetch(url)
         .then(weather => weather.json())
@@ -211,3 +214,17 @@ document.addEventListener('keyup', ({ keyCode }) => {
 });
 
 
+geoBtn.addEventListener('click', getGeolocation)
+
+function getGeolocation() {
+    let lon;
+    let lat;
+    let geolocation = navigator.geolocation;
+    if (geolocation) {
+        geolocation.getCurrentPosition(({ coords }) => {
+            lon = coords.longitude;
+            lat = coords.latitude
+            getResults({}, { lat, lon });
+        })
+    }
+}
