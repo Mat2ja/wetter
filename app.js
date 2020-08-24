@@ -5,12 +5,13 @@ const api = {
 console.clear();
 const searchbox = document.querySelector('.header__search-box');
 const main = document.querySelector('main');
-const city = document.querySelector('.location__city');
-const date = document.querySelector('.location__date');
-const temperature = document.querySelector('.current__temp');
-const feel = document.querySelector('.current__feels-like');
+const cityEl = document.querySelector('.location__city');
+const dateEl = document.querySelector('.location__date');
+const temperatureEl = document.querySelector('.current__temp');
+const feelEl = document.querySelector('.current__feels-like');
 const weatherDescEl = document.querySelector('.current__weather');
-const highLow = document.querySelector('.current__hi-low');
+const highLowGroupEL = document.querySelector('#hi-low');
+const otherGroupEl = document.querySelector('.current__group#other');
 const suggestions = document.querySelector('.suggestions');
 const geoBtn = document.querySelector('#geolocate');
 
@@ -55,17 +56,30 @@ function findCityObject(suggestion) {
     return cities.find(o => o.id == suggestion.dataset.id);
 }
 
-function getResults(query, coords) {
+function getGeolocation() {
+    let lon;
+    let lat;
+    let geolocation = navigator.geolocation;
+    if (geolocation) {
+        geolocation.getCurrentPosition(({ coords }) => {
+            lon = coords.longitude;
+            lat = coords.latitude
+            console.log(lon, lat);
+            getResults({ lat, lon });
+        })
+    }
+}
+
+function getResults(query) {
     console.log(query);
     let url;
     if (query.id) {
         url = `${api.baseUrl}weather?id=${query.id}&unit=metric&appid=${api.key}`;
-    } else if (coords) {
-        url = `${api.baseUrl}weather?lat=${coords.lat}&lon=${coords.lon}&appid=${api.key}`
+    } else if (query.lat && query.lon) {
+        url = `${api.baseUrl}weather?lat=${query.lat}&lon=${query.lon}&appid=${api.key}`
     } else {
         url = `${api.baseUrl}weather?q=${query}&unit=metric&appid=${api.key}`;
     }
-
 
     fetch(url)
         .then(weather => weather.json())
@@ -76,38 +90,81 @@ function getResults(query, coords) {
 function displayResults(weather, query) {
     const { coord } = query;
     clearSuggestions();
-
-    city.innerHTML = `
+    console.log('WEATHER:', weather);
+    cityEl.innerHTML = `
         ${weather.name}, ${weather.sys.country}
         <ion-icon name="location" class='icon'></ion-icon> 
     `;
-    city.dataset.id = query.id;
+
+    // if geolocatiom get city ID from the weather api
+    cityEl.dataset.id = query.id || weather.id;
 
     if (coord) {
-        city.href = `https://www.google.com/maps?q=${query.name}&ll=${coord.lat},${coord.lon}&t=k`;
+        cityEl.href = `https://www.google.com/maps?q=${query.name}&ll=${coord.lat},${coord.lon}&t=k`;
+    } else if (query.lat && query.lon) {
+        cityEl.href = `https://www.google.com/maps?q=${cityEl.innerText}&ll=${query.lat},${query.lon}&t=k`;
     } else {
-        city.href = `https://www.google.com/maps?q=${query}&t=k`;
+        cityEl.href = `https://www.google.com/maps?q=${query}&t=k`;
     }
 
-    date.innerText = moment().format('dddd D MMMM');
+    dateEl.innerText = moment().format('dddd D MMMM');
 
     let temp = Math.round(calculateCelsius(weather.main.temp));
-    let feelsLike = Math.round(calculateCelsius(weather.main.feels_like));
+    let feel = Math.round(calculateCelsius(weather.main.feels_like));
     let tempHigh = Math.round(calculateCelsius(weather.main.temp_max));
     let tempLow = Math.round(calculateCelsius(weather.main.temp_min));
+    let humidity = parseInt(weather.main.humidity);
+    let cloudiness = parseInt(weather.clouds.all);
+    let pressure = parseInt(weather.main.pressure);
+    let visibility = parseInt(weather.visibility);
+    let windDeg = parseInt(weather.wind.deg);
+    let windSpeed = parseFloat(weather.wind.speed);
     let weatherDesc = weather.weather[0].main;
+    let weatherDescFull = weather.weather[0].description;
 
-    temperature.innerHTML = `
+    temperatureEl.innerHTML = `
         ${temp}
         <span class="unit">&degC</span>
     `;
-    feel.innerHTML = `Feels like ${feelsLike}<span class="deg">&degC</span>`
+    feelEl.innerHTML = `Feels like ${feel}<span class="deg">&degC</span>`
     weatherDescEl.innerText = weatherDesc;
-    highLow.innerHTML = `
-        ${tempLow}<span class="unit">&degC</span>
+    highLowGroupEL.innerHTML = `
+        <span class='low' title='Low'>${tempLow}<span class="unit temp">&degC</span></span>
         <ion-icon name="thermometer" class='icon'></ion-icon>
-        ${tempHigh}<span class="unit">&degC</span>
+        <span class='high' title='High'>${tempHigh}<span class="unit temp">&degC</span></span>
     `;
+    otherGroupEl.innerHTML = `
+        <span title="Humidity" class="left">
+            <ion-icon name="water" class="icon"></ion-icon>
+            ${humidity}<span class="unit percent">%</span>
+        </span>
+        <span title="Cloudiness" class="right">
+            ${cloudiness}<span class="unit percent">%</span>
+            <ion-icon name="cloudy" class="icon"></ion-icon>
+        </span>
+
+        <span title="Wind angle" class="wind left">${windDeg}<span class="unit deg">&deg</span></span>
+        <i class="bx bx-wind icon center" title="Wind"></i>
+        <span title="Wind speed" class="wind right">${windSpeed}<span class="unit">km/h</span></span>
+
+        <span title="Visibility" class="left">
+            <ion-icon name="eye" class="icon"></ion-icon>
+            ${visibility}<span class="unit meter">m</span>
+        </span>
+        <span title="Pressure" class="right">
+            ${pressure}<span class="unit">hPa</span>
+            <i class="bx bx-water icon"></i>
+        </span>
+    `;
+
+    weatherDescEl.addEventListener('click', () => {
+        console.log('clicked');
+        if (weatherDescEl.innerText === weatherDesc) {
+            weatherDescEl.innerText = weatherDescFull;
+        } else {
+            weatherDescEl.innerText = weatherDesc;
+        }
+    });
 
     searchbox.value = '';
     searchbox.blur();
@@ -165,12 +222,13 @@ function clearSuggestions() {
 }
 
 function clearWeatherData() {
-    city.innerText = '';
-    date.innerText = '';
-    temperature.innerText = '';
-    feel.innerText = '';
+    cityEl.innerText = '';
+    dateEl.innerText = '';
+    temperatureEl.innerText = '';
+    feelEl.innerText = '';
     weatherDescEl.innerText = '';
-    highLow.innerText = '';
+    highLowGroupEL.innerText = '';
+    otherGroupEl.innerText = '';
 }
 
 function moveThroughSuggestions(counter, direction) {
@@ -216,15 +274,3 @@ document.addEventListener('keyup', ({ keyCode }) => {
 
 geoBtn.addEventListener('click', getGeolocation)
 
-function getGeolocation() {
-    let lon;
-    let lat;
-    let geolocation = navigator.geolocation;
-    if (geolocation) {
-        geolocation.getCurrentPosition(({ coords }) => {
-            lon = coords.longitude;
-            lat = coords.latitude
-            getResults({}, { lat, lon });
-        })
-    }
-}

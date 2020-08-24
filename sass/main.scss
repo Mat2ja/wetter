@@ -184,6 +184,7 @@ main {
 
 .location {
 	color: white;
+
 	&__city {
 		font-size: 3.6rem;
 		margin-bottom: 0.8rem;
@@ -194,7 +195,7 @@ main {
 		.icon {
 			font-size: 0.8em;
 			margin-left: 1.2rem;
-			margin-right: -2.4rem;
+			margin-right: -1.5rem;
 		}
 	}
 
@@ -205,6 +206,10 @@ main {
 
 .current {
 	color: white;
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+
 	&__temp {
 		font-size: 10.2rem;
 		font-weight: 900;
@@ -217,10 +222,6 @@ main {
 		span {
 			font-weight: 600;
 			margin-left: 0.8rem;
-
-			&.unit {
-				font-size: 0.7em;
-			}
 		}
 	}
 
@@ -238,9 +239,10 @@ main {
 		display: flex;
 		align-items: center;
 		justify-content: center;
+		cursor: pointer;
 	}
 
-	&__hi-low {
+	&__group {
 		font-size: 2.4rem;
 		font-weight: 500;
 		text-shadow: 0.1rem 0.4rem rgba(0, 0, 0, 0.5);
@@ -249,12 +251,65 @@ main {
 		align-items: center;
 		justify-content: center;
 
-		.icon {
-			position: relative;
-			top: 1px;
-			font-size: 1.2em;
-			margin: 0 0.8rem;
+		> span {
+			display: flex;
+			align-items: center;
 		}
+
+		&#other {
+			margin-top: 2.4rem;
+			font-size: 1.8rem;
+			display: grid;
+			grid-template-columns: max-content 6rem max-content;
+			row-gap: 1.2rem;
+			justify-content: center;
+		}
+
+		.left {
+			grid-column: 1 / span 1;
+			justify-self: end;
+		}
+
+		.center {
+			justify-self: center;
+			grid-column: span 2;
+		}
+
+		.right {
+			grid-column: -1 / span 1;
+			justify-self: start;
+		}
+
+		.full {
+			grid-column: 1 / -1;
+		}
+
+		.unit {
+			opacity: 0.8;
+			margin-left: 0.5rem;
+
+			&.temp {
+				margin-left: 0.3rem;
+				align-self: start;
+			}
+
+			&.deg {
+				font-size: 1em;
+				margin-left: 0.1em;
+			}
+
+			&.meter {
+			}
+		}
+	}
+
+	.unit {
+		font-size: 0.7em;
+	}
+
+	.icon {
+		font-size: 1.4em;
+		margin: 0 0.8rem;
 	}
 }
 

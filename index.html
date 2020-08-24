@@ -12,6 +12,7 @@
         <link rel="icon" type="image/png" sizes="16x16" href="img/favicons/favicon-16x16.png">
         <link rel="manifest" href="img/favicons/site.webmanifest">
 
+        <link href='https://unpkg.com/boxicons@2.0.5/css/boxicons.min.css' rel='stylesheet'>
         <link rel="stylesheet" href="./flag-icon-css/css/flag-icon.min.css">
         <link rel="stylesheet" href="css/style.css">
         <link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,400;0,500;0,700;0,900;1,400;1,700&display=swap" rel="stylesheet">
@@ -31,20 +32,21 @@
             </header>
             <main>
                 <section class="location">
-                    <a class="location__city" target='_blank' data-id=''></a>
+                    <a class="location__city" target='_blank' data-id='' title='Check out on Google Maps'></a>
                     <div class="location__date"></div>
                 </section>
                 <div class="current">
                     <div class="current__temp"></div>
                     <div class="current__feels-like"></div>
                     <div class="current__weather"></div>
-                    <div class="current__hi-low">
-                    </div>
+                    <div class="current__group" id="hi-low"></div>
+                    <div class="current__group" id="other"></div>
                 </div>
             </main>
         </div>
 
         <script src="https://unpkg.com/ionicons@5.1.2/dist/ionicons.js"></script>
+        <script src="https://unpkg.com/boxicons@latest/dist/boxicons.js"></script>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.27.0/moment.min.js"></script>
         <script src="app.js"></script>
     </body>
