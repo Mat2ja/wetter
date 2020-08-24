@@ -40,7 +40,7 @@ function setQuery(e) {
             let cityObj = cities.find(o => o.name.toLowerCase() == searchbox.value.toLowerCase()) || searchbox.value;
             getResults(cityObj);
         } else {
-            console.log(searchbox.value);
+            // console.log(searchbox.value);
             // TODO dont send request for empty strings
             if (searchbox.value === '') {
                 throw new Error('No city provided');
@@ -64,14 +64,13 @@ function getGeolocation() {
         geolocation.getCurrentPosition(({ coords }) => {
             lon = coords.longitude;
             lat = coords.latitude
-            console.log(lon, lat);
             getResults({ lat, lon });
         })
     }
 }
 
 function getResults(query) {
-    console.log(query);
+    console.log('City: ', query);
     let url;
     if (query.id) {
         url = `${api.baseUrl}weather?id=${query.id}&unit=metric&appid=${api.key}`;
@@ -90,7 +89,7 @@ function getResults(query) {
 function displayResults(weather, query) {
     const { coord } = query;
     clearSuggestions();
-    console.log('WEATHER:', weather);
+    console.log('Weather: ', weather);
     cityEl.innerHTML = `
         ${weather.name}, ${weather.sys.country}
         <ion-icon name="location" class='icon'></ion-icon> 
@@ -158,7 +157,6 @@ function displayResults(weather, query) {
     `;
 
     weatherDescEl.addEventListener('click', () => {
-        console.log('clicked');
         if (weatherDescEl.innerText === weatherDesc) {
             weatherDescEl.innerText = weatherDescFull;
         } else {
