@@ -232,48 +232,62 @@ function clearWeatherData() {
     weatherDescEl.innerText = '';
     highLowGroupEL.innerText = '';
     otherGroupEl.innerText = '';
+
 }
 
-function moveThroughSuggestions(counter, direction) {
-    // TODO
+function moveThroughSuggestions(dir) {
     let suggestionsItems = document.querySelectorAll('.suggestions__item');
-    console.log('COUNTER', counter);
 
-    if (counter === suggestionsItems.length) {
-        suggestionsItems[counter - 1].classList.remove('active');
-        counter = 0;
+
+    if (dir === 'down') {
+        counter.count++;
+    } else if (dir === 'up') {
+        counter.count--;
     }
-    if (counter === 0) {
-        suggestionsItems[counter].classList.add('active');
-        return;
+    console.log(counter);
+
+    removeAllActive();
+
+    // console.log(counter.count);
+
+    if (counter.count < 0 || counter.count >= suggestionsItems) {
+        counter.count = -1;
+    } else {
+        addActive(counter.count);
     }
 
-    suggestionsItems[counter - 1].classList.remove('active');
-    suggestionsItems[counter++].classList.add('active');
+    function addActive(i) {
+        suggestionsItems[i].classList.add('active')
+    }
+
+    function removeAllActive() {
+        for (let item of suggestionsItems) {
+            if (item.classList.contains('active')) {
+                item.classList.remove('active');
+            }
+        }
+    };
 }
 
 searchbox.addEventListener('input', displayMatches);
 searchbox.addEventListener('keypress', setQuery);
 
-let counter = 0;
+let counter = { count: -1 };
 document.addEventListener('keyup', ({ keyCode }) => {
     if (keyCode === 9) {
         searchbox.focus();
     } else if (keyCode === 40) {
         // DOWN
         if (suggestions.hasChildNodes()) {
-            console.log('arrow down');
-            // moveThroughSuggestions(counter++);
+            // moveThroughSuggestions('down')
         }
     } else if (keyCode === 38) {
         // UP
         if (suggestions.hasChildNodes()) {
-            console.log('arrow down');
-            // moveThroughSuggestions(counter++);
+            // moveThroughSuggestions('up')
         }
     }
 });
-
 
 geoBtn.addEventListener('click', getGeolocation);
 
