@@ -28,13 +28,18 @@ html {
 
 body {
 	font-size: 1.6rem;
-	background: url(../img/bg.jpg) no-repeat;
+	transition: all 1000ms;
+
+	background: url(../img/bg.jpg);
+	background-repeat: no-repeat;
 	background-size: cover;
 	background-position: top center;
+	transition: all 1000ms;
 }
 
 ::selection {
-	background: hsla(10, 81%, 68%, 0.8);
+	// background: hsla(10, 81%, 68%, 0.8);
+	background: hsla(144, 40%, 44%, 0.55);
 }
 
 .app-wrap {
@@ -43,8 +48,8 @@ body {
 	height: 100vh;
 	background-image: linear-gradient(
 		to bottom,
-		rgba(0, 0, 0, 0.2),
-		rgba(0, 0, 0, 0.5)
+		rgba(0, 0, 0, 0.1),
+		rgba(0, 0, 0, 0.35)
 	);
 }
 
@@ -79,12 +84,14 @@ body {
 
 		ion-icon {
 			font-size: 2rem;
-			color: #c24f38;
+			// color: #c24f38;
+			color: hsl(144, 40%, 44%);
 			display: block;
 		}
 
 		&:hover {
-			background: hsla(10, 55%, 49%, 0.2);
+			// background: hsla(10, 55%, 49%, 0.2);
+			background: hsla(144, 40%, 44%, 0.1);
 		}
 	}
 
@@ -104,8 +111,8 @@ body {
 		border-radius: 1.6rem 0 1.6rem 0;
 		color: #313131;
 
-		// border-bottom: 0.3rem solid hsl(144, 40%, 35%);
-		border-bottom: 0.3rem solid #c24f38;
+		border-bottom: 0.3rem solid hsl(144, 40%, 44%);
+		// border-bottom: 0.3rem solid #c24f38;
 		transform: scale(1, 1);
 		transition: background 300ms ease-out, border-radius 150ms ease-out;
 
@@ -135,7 +142,7 @@ body {
 		padding: 0.6em 0.95em;
 		list-style: none;
 
-		transition: background 0.2s;
+		transition: background 200ms;
 		cursor: pointer;
 
 		&:hover,
@@ -159,7 +166,7 @@ body {
 		}
 
 		&.hl {
-			background: hsla(10, 81%, 68%, 0.8);
+			background: hsla(60, 76%, 67%, 0.8);
 		}
 	}
 
@@ -191,11 +198,18 @@ main {
 		font-weight: 500;
 		display: flex;
 		align-items: center;
+		border-bottom: 2px solid transparent;
+
+		transition: all 300ms ease;
 
 		.icon {
 			font-size: 0.8em;
 			margin-left: 1.2rem;
 			margin-right: -1.5rem;
+		}
+
+		&:hover {
+			transform: skew(-15deg);
 		}
 	}
 
@@ -209,6 +223,10 @@ main {
 	display: flex;
 	flex-direction: column;
 	align-items: center;
+
+	> * {
+		cursor: crosshair;
+	}
 
 	&__temp {
 		font-size: 10.2rem;
@@ -240,6 +258,12 @@ main {
 		align-items: center;
 		justify-content: center;
 		cursor: pointer;
+
+		transition: all 300ms ease;
+
+		&:hover {
+			transform: skew(-15deg);
+		}
 	}
 
 	&__group {

@@ -14,16 +14,19 @@
 
         <link href='https://unpkg.com/boxicons@2.0.5/css/boxicons.min.css' rel='stylesheet'>
         <link rel="stylesheet" href="./flag-icon-css/css/flag-icon.min.css">
+        
+        <link rel="stylesheet" href="https://unpkg.com/tippy.js@6/animations/scale.css">
+
         <link rel="stylesheet" href="css/style.css">
         <link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,400;0,500;0,700;0,900;1,400;1,700&display=swap" rel="stylesheet">
     </head>
 
-    <body>
+    <body class="bg2">
         <div class="app-wrap">
             <header class="header">
                 <div class="input-box">
                     <input type="text" autocomplete="off" class="header__search-box" placeholder="Search for a place...">
-                    <button class="btn" id="geolocate">
+                    <button class="btn" id="geolocate" data-tippy-content="Locate me">
                         <ion-icon name="locate"></ion-icon>
                     </button>
                 </div>
@@ -32,8 +35,8 @@
             </header>
             <main>
                 <section class="location">
-                    <a class="location__city" target='_blank' data-id='' title='Check out on Google Maps'></a>
-                    <div class="location__date"></div>
+                    <a class="location__city " target='_blank' data-tippy-content='See on Google Maps'></a>
+                    <div class="location__date " data-tippy-content='Current date'></div>
                 </section>
                 <div class="current">
                     <div class="current__temp"></div>
@@ -45,10 +48,16 @@
             </main>
         </div>
 
+        <!-- Moment.js -->
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.27.0/moment.min.js"></script>
+        <!-- Tippy -->
+        <script src="https://unpkg.com/@popperjs/core@2/dist/umd/popper.min.js"></script>
+        <script src="https://unpkg.com/tippy.js@6/dist/tippy-bundle.umd.js"></script>
+        <!-- Icons -->
         <script src="https://unpkg.com/ionicons@5.1.2/dist/ionicons.js"></script>
         <script src="https://unpkg.com/boxicons@latest/dist/boxicons.js"></script>
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.27.0/moment.min.js"></script>
-        <script src="app.js"></script>
+        <!-- My script -->
+        <script type="module" src="app.js"></script>
     </body>
 
 </html>

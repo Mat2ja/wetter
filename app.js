@@ -22,6 +22,8 @@ const cityList = fetch('./city.list.json')
         cities = data;
     });
 
+tippy('[data-tippy-content]');
+
 function setQuery(e) {
     // Enter
     if (e.keyCode === 13) {
@@ -119,7 +121,7 @@ function displayResults(weather, query) {
     let windDeg = parseInt(weather.wind.deg);
     let windSpeed = parseFloat(weather.wind.speed);
     let weatherDesc = weather.weather[0].main;
-    let weatherDescFull = weather.weather[0].description;
+    let weatherDescFull = weather.weather[0].description
 
     temperatureEl.innerHTML = `
         ${temp}
@@ -128,29 +130,29 @@ function displayResults(weather, query) {
     feelEl.innerHTML = `Feels like ${feel}<span class="deg">&degC</span>`
     weatherDescEl.innerText = weatherDesc;
     highLowGroupEL.innerHTML = `
-        <span class='low' title='Low'>${tempLow}<span class="unit temp">&degC</span></span>
+        <span class='low ' data-tippy-content='Low'>${tempLow}<span class="unit temp">&degC</span></span>
         <ion-icon name="thermometer" class='icon'></ion-icon>
-        <span class='high' title='High'>${tempHigh}<span class="unit temp">&degC</span></span>
+        <span class='high ' data-tippy-content='High'>${tempHigh}<span class="unit temp">&degC</span></span>
     `;
     otherGroupEl.innerHTML = `
-        <span title="Humidity" class="left">
+        <span data-tippy-content="Humidity" class="left ">
             <ion-icon name="water" class="icon"></ion-icon>
             ${humidity}<span class="unit percent">%</span>
         </span>
-        <span title="Cloudiness" class="right">
+        <span data-tippy-content="Cloudiness" class="right ">
             ${cloudiness}<span class="unit percent">%</span>
             <ion-icon name="cloudy" class="icon"></ion-icon>
         </span>
 
-        <span title="Wind angle" class="wind left">${windDeg}<span class="unit deg">&deg</span></span>
-        <i class="bx bx-wind icon center" title="Wind"></i>
-        <span title="Wind speed" class="wind right">${windSpeed}<span class="unit">km/h</span></span>
+        <span data-tippy-content="Wind angle" class="wind left ">${windDeg}<span class="unit deg">&deg</span></span>
+        <i class="bx bx-wind icon center " data-tippy-content="Wind"></i>
+        <span data-tippy-content="Wind speed" class="wind right ">${windSpeed}<span class="unit">km/h</span></span>
 
-        <span title="Visibility" class="left">
+        <span data-tippy-content="Visibility" class="left ">
             <ion-icon name="eye" class="icon"></ion-icon>
             ${visibility}<span class="unit meter">m</span>
         </span>
-        <span title="Pressure" class="right">
+        <span data-tippy-content="Pressure" class="right ">
             ${pressure}<span class="unit">hPa</span>
             <i class="bx bx-water icon"></i>
         </span>
@@ -166,6 +168,9 @@ function displayResults(weather, query) {
 
     searchbox.value = '';
     searchbox.blur();
+
+    // Tooltips
+    tippy('[data-tippy-content]');
 }
 
 function calculateCelsius(kelvin) {
@@ -270,5 +275,5 @@ document.addEventListener('keyup', ({ keyCode }) => {
 });
 
 
-geoBtn.addEventListener('click', getGeolocation)
+geoBtn.addEventListener('click', getGeolocation);
 
