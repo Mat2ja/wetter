@@ -121,7 +121,7 @@ function displayResults(weather, query) {
     let windDeg = parseInt(weather.wind.deg);
     let windSpeed = parseFloat(weather.wind.speed);
     let weatherDesc = weather.weather[0].main;
-    let weatherDescFull = weather.weather[0].description
+    let weatherDescFull = weather.weather[0].description;
 
     temperatureEl.innerHTML = `
         ${temp}
@@ -158,13 +158,18 @@ function displayResults(weather, query) {
         </span>
     `;
 
-    weatherDescEl.addEventListener('click', () => {
+    const toggleWeatherInfo = () => {
+        console.log('weather btn clicked');
+        console.log(weatherDescEl.innerText, weatherDesc, weatherDescFull);
         if (weatherDescEl.innerText === weatherDesc) {
             weatherDescEl.innerText = weatherDescFull;
-        } else {
+        } else if (weatherDescEl.innerText === weatherDescFull) {
             weatherDescEl.innerText = weatherDesc;
         }
-    });
+    };
+
+    // TODO works only for first location
+    // weatherDescEl.addEventListener('click', toggleWeatherInfo);
 
     searchbox.value = '';
     searchbox.blur();
