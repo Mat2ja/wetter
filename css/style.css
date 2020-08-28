@@ -116,7 +116,8 @@ body {
       align-items: center;
       font-weight: 500; }
     .suggestions span.hl {
-      background: rgba(235, 235, 107, 0.8); }
+      font-weight: bold;
+      color: #0E332C; }
   .suggestions .flag-icon {
     font-size: 2rem;
     margin-left: 0.8rem;
