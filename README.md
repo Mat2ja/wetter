@@ -2,6 +2,8 @@
 
 Just a cute weather app I made
 
+Used vanilla JavaScript and Sass
+
 Has autocomplete, tooltips and geolocation 🤗
 
 ## [Live Demo](https://mat2ja.github.io/wetter/)
